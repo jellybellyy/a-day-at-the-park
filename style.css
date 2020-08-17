@@ -1,0 +1,60 @@
+body {
+	text-align: center;
+	background-image: url('images/park.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	top: 60px;
+}
+
+h1 {
+	font-family: 'Playfair Display', serif;
+	font-size: 40px;
+	color: #234F1E;
+	/*font-style: italic;*/
+}
+
+h4 {
+	font-family: 'Open Sans', sans-serif;
+	color: #234F1E;
+}
+
+.game-container {
+	display: grid;
+	grid-template-columns: repeat(4, auto);
+	grid-gap: 15px;
+	justify-content: center;
+}
+
+.game-info-container {
+	display: flex;
+	margin-bottom: 20px;
+	grid-column: 1 / -1;
+	justify-content: space-between;
+}
+
+.game-info{
+	font-size: 18px;
+	font-family: 'Work Sans', sans-serif;
+	color: #234F1E;
+	font-style: italic;
+}
+
+.card {
+	/*background-color: #C49BFC;*/
+	height: 165px;
+	width: 140px;
+	border-radius: 5px;
+}
+
+footer {
+	font-size: 10px;
+	margin: 50px auto;
+	width: 50%;
+	color: #234F1E;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
