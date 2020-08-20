@@ -65,131 +65,190 @@ const cardArray = [
     }
 ];
 
-// Randomise the cards
+// SHUFFLING THE CARDS
+cardArray.sort( () => 0.5 - Math.random() );
 
-cardArray.sort( () => 0.5 - Math.random());
-
-// Variables and Selectors
-
+// DEFINING VARIABLES AND GRABBING ELEMENTS
 var body = document.querySelector('body');
 var gameContainer = document.querySelector('.game-container');
+var gameInfoContainer = document.querySelector('.game-info-container');
+var cardsContainer = document.querySelector('.cards-container');
+var restartBtn = document.getElementById('restart');
 
-var cardsChosen = [];
-var cardsChosenId = [];
+var overlays = document.querySelectorAll('.overlay-text');
+
+var seconds = 50;
+var secondsLeft = document.getElementById('time');
+var countdown;
+
+var moves = 0;
+var counter = document.getElementById('moves');
+
+var chosenCard = [];
+var chosenCardId = [];
 var cardsWon = [];
 
-// Creating all the card elements
 
-var createGameBoard = function () {
+// ASSIGNING VALUES TO OVERLAYS
+
+// GAME START OVERLAY
+overlays[0].addEventListener('click', () => {
+        overlays[0].classList.remove('visible');
+        countdown = setInterval(timer, 1000);
+})
+
+// GAME OVER OVERLAY
+overlays[1].addEventListener('click', () => {
+        overlays[1].classList.remove('visible');
+        window.location.reload();
+})
+
+// GAME WON OVERLAY
+overlays[2].addEventListener('click', () => {
+        overlays[2].classList.remove('visible');
+        window.location.reload();
+
+})
+
+// COUNTDOWN FUNCTION
+function timer () {
+
+    if ( seconds == 0 ) {
+        document.getElementById('game-over-text').classList.add('visible');
+        secondsLeft.innerText = '0';
+        clearInterval(countdown);
+    }
+
+    seconds -= 1;
+    secondsLeft.innerText = seconds;
+}
+
+// CLEAR COUNTDOWN
+function clearCountdown () {
+    clearInterval(countdown);
+    seconds = 50;
+    secondsLeft.innerText = seconds;
+}
+
+// CHECK NUMBER OF MOVES
+function movesCounter () {
+
+    moves ++
+    counter.innerText = moves;
+}
+
+// CLEAR MOVES
+function clearMovesCounter () {
+    moves = 0;
+    counter.innerText = moves;
+}
+
+// CREATE CARDS AND ADD EVENT LISTENER
+function createBoard () {
 
     for ( var i = 0 ; i < cardArray.length ; i ++ ) {
 
         var card = document.createElement('img');
-        card.classList.add('card');
-        // card.classList.add('visible');
+        card.classList.add('card', 'cardface');
         card.setAttribute('id', i);
-        card.setAttribute('src', 'images/green2.png');
-        card.style.opacity = '0.6';
+        card.src = 'images/cardface.png';
         gameContainer.appendChild(card);
 
-        // var cardFront = document.createElement('div');
-        // cardFront.classList.add('card-front');
-        // card.appendChild(cardFront);
-
-        // var cardFace = document.createElement('img');
-        // cardFace.classList.add('card-face');
-        // card.appendChild(cardFace);
-
-
-        // var cardBack = document.createElement('div');
-        // cardBack.classList.add('card-back', 'card-face');
-        // card.appendChild(cardBack);
-
         card.addEventListener('click', flipCard);
-
     }
 }
 
-createGameBoard();
+createBoard();
 
-// card container
-
+// ARRAY OF ALL CARDS
 var cards = document.querySelectorAll('.card');
 
-// funtion to match the pairs
-
+// CHECK FOR MATCHES BETWEEN TWO CARDS
 function checkForMatch () {
 
-    var cardOneId = cardsChosenId[0];
-    var cardTwoId = cardsChosenId[1];
-    // var cardThreeId = cardsChosenId[2];
-
+    var cardOneName = chosenCard[0];
+    var cardTwoName = chosenCard[1];
+    var cardOneId = chosenCardId[0];
+    var cardTwoId = chosenCardId[1];
 
     if ( cardOneId == cardTwoId ) {
-
-        cards[cardOneId].setAttribute('src', 'images/green2.png')
+        cards[cardOneId].src = 'images/cardface.png'
         cards[cardOneId].style.opacity = '0.6';
-        cards[cardTwoId].setAttribute('src', 'images/green2.png')
-        cards[cardTwoId].style.opacity = '0.6';
-        alert('You have clicked the same image!')
+        alert('You have selected the same card twice!');
     }
 
-    else if ( cardsChosen.length > 2 ) {
-        cards[cardOneId].setAttribute('src', 'images/green2.png')
-        cards[cardOneId].style.opacity = '0.6';
-        cards[cardTwoId].setAttribute('src', 'images/green2.png')
-        cards[cardTwoId].style.opacity = '0.6';
-        alert('You have clicked more than two images!')
-    }
-
-    else if ( cardsChosen[0] == cardsChosen[1] ) {
-        // alert("You've found a match!");
+    else if ( cardOneName == cardTwoName ) {
         cards[cardOneId].style.visibility = 'hidden';
-        cards[cardTwoId].style.visibility = 'hidden';
         cards[cardOneId].removeEventListener('click', flipCard);
+        cards[cardTwoId].style.visibility = 'hidden';
         cards[cardTwoId].removeEventListener('click', flipCard);
-        cardsWon.push(cardsChosen);
-        console.log(cardsChosen);
+        cardsWon.push(chosenCard);
     }
 
     else {
-        cards[cardOneId].setAttribute('src', 'images/green2.png');
+        cards[cardOneId].src = 'images/cardface.png';
         cards[cardOneId].style.opacity = '0.6';
-        cards[cardTwoId].setAttribute('src', 'images/green2.png');
+        cards[cardTwoId].src = 'images/cardface.png';
         cards[cardTwoId].style.opacity = '0.6';
     }
 
-    cardsChosen = [];
-    cardsChosenId = [];
+    chosenCard = [];
+    chosenCardId = [];
 
     if ( cardsWon.length == cardArray.length / 2 ) {
-        setTimeout ( alert("Congratulations! You've finished the game!"), 2000 );
+        clearInterval(countdown);
+        document.getElementById('victory-text').classList.add('visible');
     }
 
 }
 
-
-// function to call when the card gets clicked
-
+// FLIP CARDS THAT ARE CLICKED
 function flipCard () {
 
-    var cardId = this.getAttribute('id');
-    cardsChosen.push(cardArray[cardId].name);
-    cardsChosenId.push(cardId);
-    this.setAttribute('src', cardArray[cardId].img);
-    this.style.opacity = '1';
+    if ( chosenCard.length > 2 ) {
 
-    if ( cardsChosen.length == 2 ) {
-        setTimeout(checkForMatch, 700);
+        for ( var i = 0 ; i < cardArray.length ; i ++ ) {
+            this.removeEventListener('click', flipCard);
+        }
     }
 
-    else if ( cardsChosen.length > 2 ) {
-        cardsChosen.splice(2,1);
-        checkForMatch();
+    else if ( chosenCard.length < 2 ) {
+
+        var cardId = this.getAttribute('id');
+        this.src = cardArray[cardId].img;
+        chosenCard.push(cardArray[cardId].name);
+        chosenCardId.push(cardId);
+        this.style.opacity = 1;
+        console.log(chosenCard);
+        console.log(chosenCardId);
+
+        if (chosenCard.length == 2 ) {
+            movesCounter();
+            setTimeout(checkForMatch, 1000);
+        }
     }
 
 }
 
+restartBtn.addEventListener('click', () => {
+    window.location.reload();
+})
+
+// // RESET BOARD
+// function resetBoard () {
+
+//     cardArray.sort( () => 0.5 - Math.random() );
+//     chosenCard = [];
+//     chosenCardId = [];
+//     cardsWon = [];
+//     clearMovesCounter();
+//     console.log('hi');
+
+//     for ( var i = 0 ; i < cardArray.length ; i ++ ) {
+//         card.style.visibility = 'visible';
+//     }
+
+// }
 
 
 
@@ -225,9 +284,4 @@ function flipCard () {
 
 
 
-
-
-
-
-
-//hi
+// hi
