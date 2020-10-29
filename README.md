@@ -2,7 +2,7 @@
 
 ## URL
 
-<a href="http://www.google.com">include game url here</a>
+<a href="https://jellybellyy.github.io/a-day-at-the-park/">https://jellybellyy.github.io/a-day-at-the-park/</a>
 
 ## Description & Instructions
 
