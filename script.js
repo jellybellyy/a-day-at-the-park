@@ -66,7 +66,7 @@ const cardArray = [
 ];
 
 // SHUFFLING THE CARDS
-cardArray.sort( () => 0.5 - Math.random() );
+cardArray.sort(() => 0.5 - Math.random());
 
 // DEFINING VARIABLES AND GRABBING ELEMENTS
 var body = document.querySelector('body');
@@ -93,27 +93,27 @@ var cardsWon = [];
 
 // GAME START OVERLAY
 overlays[0].addEventListener('click', () => {
-        overlays[0].classList.remove('visible');
-        countdown = setInterval(timer, 1000);
+    overlays[0].classList.remove('visible');
+    countdown = setInterval(timer, 1000);
 })
 
 // GAME OVER OVERLAY
 overlays[1].addEventListener('click', () => {
-        overlays[1].classList.remove('visible');
-        window.location.reload();
+    overlays[1].classList.remove('visible');
+    window.location.reload();
 })
 
 // GAME WON OVERLAY
 overlays[2].addEventListener('click', () => {
-        overlays[2].classList.remove('visible');
-        window.location.reload();
+    overlays[2].classList.remove('visible');
+    window.location.reload();
 
 })
 
 // COUNTDOWN FUNCTION
-function timer () {
+function timer() {
 
-    if ( seconds == 0 ) {
+    if (seconds == 0) {
         document.getElementById('game-over-text').classList.add('visible');
         secondsLeft.innerText = '0';
         clearInterval(countdown);
@@ -123,30 +123,30 @@ function timer () {
     secondsLeft.innerText = seconds;
 }
 
-// CLEAR COUNTDOWN
-function clearCountdown () {
-    clearInterval(countdown);
-    seconds = 50;
-    secondsLeft.innerText = seconds;
-}
+// // CLEAR COUNTDOWN
+// function clearCountdown () {
+//     clearInterval(countdown);
+//     seconds = 50;
+//     secondsLeft.innerText = seconds;
+// }
 
 // CHECK NUMBER OF MOVES
-function movesCounter () {
+function movesCounter() {
 
-    moves ++
+    moves++
     counter.innerText = moves;
 }
 
 // CLEAR MOVES
-function clearMovesCounter () {
+function clearMovesCounter() {
     moves = 0;
     counter.innerText = moves;
 }
 
 // CREATE CARDS AND ADD EVENT LISTENER
-function createBoard () {
+function createBoard() {
 
-    for ( var i = 0 ; i < cardArray.length ; i ++ ) {
+    for (var i = 0; i < cardArray.length; i++) {
 
         var card = document.createElement('img');
         card.classList.add('card', 'cardface');
@@ -164,20 +164,20 @@ createBoard();
 var cards = document.querySelectorAll('.card');
 
 // CHECK FOR MATCHES BETWEEN TWO CARDS
-function checkForMatch () {
+function checkForMatch() {
 
     var cardOneName = chosenCard[0];
     var cardTwoName = chosenCard[1];
     var cardOneId = chosenCardId[0];
     var cardTwoId = chosenCardId[1];
 
-    if ( cardOneId == cardTwoId ) {
+    if (cardOneId == cardTwoId) {
         cards[cardOneId].src = 'images/cardface.png'
         cards[cardOneId].style.opacity = '0.6';
         alert('You have selected the same card twice!');
     }
 
-    else if ( cardOneName == cardTwoName ) {
+    else if (cardOneName == cardTwoName) {
         cards[cardOneId].style.visibility = 'hidden';
         cards[cardOneId].removeEventListener('click', flipCard);
         cards[cardTwoId].style.visibility = 'hidden';
@@ -195,7 +195,7 @@ function checkForMatch () {
     chosenCard = [];
     chosenCardId = [];
 
-    if ( cardsWon.length == cardArray.length / 2 ) {
+    if (cardsWon.length == cardArray.length / 2) {
         clearInterval(countdown);
         document.getElementById('victory-text').classList.add('visible');
     }
@@ -203,16 +203,16 @@ function checkForMatch () {
 }
 
 // FLIP CARDS THAT ARE CLICKED
-function flipCard () {
+function flipCard() {
 
-    if ( chosenCard.length > 2 ) {
+    if (chosenCard.length > 2) {
 
-        for ( var i = 0 ; i < cardArray.length ; i ++ ) {
+        for (var i = 0; i < cardArray.length; i++) {
             this.removeEventListener('click', flipCard);
         }
     }
 
-    else if ( chosenCard.length < 2 ) {
+    else if (chosenCard.length < 2) {
 
         var cardId = this.getAttribute('id');
         this.src = cardArray[cardId].img;
@@ -222,7 +222,7 @@ function flipCard () {
         console.log(chosenCard);
         console.log(chosenCardId);
 
-        if (chosenCard.length == 2 ) {
+        if (chosenCard.length == 2) {
             movesCounter();
             setTimeout(checkForMatch, 1000);
         }
@@ -233,55 +233,3 @@ function flipCard () {
 restartBtn.addEventListener('click', () => {
     window.location.reload();
 })
-
-// // RESET BOARD
-// function resetBoard () {
-
-//     cardArray.sort( () => 0.5 - Math.random() );
-//     chosenCard = [];
-//     chosenCardId = [];
-//     cardsWon = [];
-//     clearMovesCounter();
-//     console.log('hi');
-
-//     for ( var i = 0 ; i < cardArray.length ; i ++ ) {
-//         card.style.visibility = 'visible';
-//     }
-
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// hi
