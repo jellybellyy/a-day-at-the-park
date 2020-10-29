@@ -10,7 +10,7 @@ This is a simple pattern matching game. It is a card game in which all of the ca
 
 ## Screenshots
 
-<img src="images/screenshots/Start.png" alt="Start"/>
+<img src="images/screenshots/Start.png" alt="Start" width=400px height=240px/>
 
 
 
