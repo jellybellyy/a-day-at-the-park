@@ -11,8 +11,8 @@ This is a simple pattern matching game. It is a card game in which all of the ca
 ## Screenshots
 
 <img src="images/screenshots/Start.png" alt="Start" width=600px height=360px/>
-
-
+<img src="images/screenshots/Move.png" alt="Start" width=600px height=360px/>
+<img src="images/screenshots/Halfway.png" alt="Start" width=600px height=360px/>
 
 A memory game.
 
