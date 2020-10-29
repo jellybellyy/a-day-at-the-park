@@ -2,7 +2,7 @@
 
 ## URL
 
-<a href="https://jellybellyy.github.io/a-day-at-the-park/">https://jellybellyy.github.io/a-day-at-the-park/</a>
+<a href="https://jellybellyy.github.io/a-day-at-the-park/">A Day At The Park</a>
 
 ## Description & Instructions
 
